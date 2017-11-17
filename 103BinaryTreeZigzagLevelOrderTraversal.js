@@ -43,6 +43,43 @@ let composeArr = function(node, sequence) {
 var zigzagLevelOrder = function(root) {
     if (root == null) {return [];}
     
-    return composeArr(root, 0);
-    
+    // return composeArr(root, 0);
+    let leftToRightQueue = [root];
+    let rightToLeftQueue = [];
+    let sequence = true;
+    let ans = [];
+
+    while (leftToRightQueue.length > 0 || rightToLeftQueue.length > 0) {
+        let tempArr = [];
+        if (sequence) {// left to right
+            for (let i = leftToRightQueue.length - 1; i >= 0 ; i--) {
+                let node = leftToRightQueue[i];
+                tempArr.push(node.val);
+
+                if (node.left !== null) {
+                    rightToLeftQueue.push(node.left)
+                }
+                if (node.right !== null) {
+                    rightToLeftQueue.push(node.right)
+                }
+            }
+            leftToRightQueue = [];
+        } else { // right to left
+            for (let i = rightToLeftQueue.length - 1; i >= 0 ; i--) {
+                let node = rightToLeftQueue[i];
+                tempArr.push(node.val);
+                if (node.right !== null) {
+                    leftToRightQueue.push(node.right)
+                }
+                if (node.left !== null) {
+                    leftToRightQueue.push(node.left)
+                }
+                leftToRightQueue
+            }
+            rightToLeftQueue = [];
+        }
+        sequence = !sequence;
+        ans.push(tempArr);
+    }
+    return ans;
 };
