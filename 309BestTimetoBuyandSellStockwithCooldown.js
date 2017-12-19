@@ -2,7 +2,7 @@
  * @param {number[]} prices
  * @return {number}
  */
-var maxProfit = function(prices) {
+/*var maxProfit = function(prices) {
     let maxProfit = 0;
     let arr = [[0,0],[0]];
     
@@ -31,4 +31,35 @@ var maxProfit = function(prices) {
         }
     }
     return maxProfit;
+};*/
+
+/*
+buy  -------> hold; ---[+price]--> sell 
+hold -------> hold; ---[+price]--> sell 
+sell -------> cooldown
+cooldown ---> cooldown; ---[-price]--> buy
+*/
+
+var maxProfit = function(prices) {
+    let len = prices.length;
+    let profit = Array(len + 1);
+    let negInf = Number.NEGATIVE_INFINITY;
+    profit[0] = [negInf, negInf, negInf, 0];
+    console.log(profit)
+    for (let i = 1; i <= len; i++) {
+        let arr = Array(4);
+        let previous = profit[i - 1];
+        arr[0] = previous[3] - prices[i - 1];
+        arr[1] = Math.max(previous[0], previous[1]);
+        arr[2] = Math.max(previous[0], previous[1]) + prices[i - 1];
+        arr[3] = Math.max(previous[2], previous[3]);
+        profit[i] = arr;
+    }
+    let maxProfit = negInf;
+    for (let i = 0; i < 4; i++) {
+        if(profit[len][i] > maxProfit) {
+            maxProfit = profit[len][i];
+        }
+    }
+    return maxProfit;    
 };
