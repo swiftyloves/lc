@@ -2,6 +2,29 @@
 /* If node had left, push self to stack, move to left;
    After pop the node from stack, move to the right
 */
+
+// cy: feel like decompression
+var inorderTraversal = function(root) {
+    let stack = [];
+    let sol = [];
+    stack.push([root, "TO_PROCESS"]);
+    while (stack.length > 0) {
+        let node = stack.pop();
+        if (node[0] === null) { continue; }
+        if (node[1] === "TO_PRINT") {
+            sol.push(node[0].val);
+        } else {
+            stack.push([node[0].right, "TO_PROCESS"]);
+            stack.push([node[0], "TO_PRINT"]);
+            stack.push([node[0].left, "TO_PROCESS"]);
+        }
+        
+    }
+    return sol;
+}
+
+//
+
 var inorderTraversal = function(root) {
     let stack = [];
     let node = root;
