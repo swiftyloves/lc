@@ -49,9 +49,13 @@ var maxProfit = function(prices) {
     for (let i = 1; i <= len; i++) {
         let arr = Array(4);
         let previous = profit[i - 1];
+        // buy
         arr[0] = previous[3] - prices[i - 1];
+        // hold
         arr[1] = Math.max(previous[0], previous[1]);
+        // sell
         arr[2] = Math.max(previous[0], previous[1]) + prices[i - 1];
+        // cooldown
         arr[3] = Math.max(previous[2], previous[3]);
         profit[i] = arr;
     }
