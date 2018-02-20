@@ -22,24 +22,24 @@ var numSquares = function(n) {
 };
 
 /* dp in recursion */
-let addSquares = function(target, arr) {
-    if (arr[target] !== null) {
-        return arr[target];
+let addSquares = function(target, dp) {
+    if (dp[target] !== null) {
+        return dp[target];
     }
     let min = Number.POSITIVE_INFINITY;
     for (let i = 1; ; i++) {
         if (target - i*i < 0) { break; }
-        min = Math.min(min, addSquares(target - i*i, arr) + 1);
+        min = Math.min(min, addSquares(target - i*i, dp) + 1);
     }
-    arr[target] = min;
+    dp[target] = min;
     return min;
 };
 var numSquares = function(n) {
-    let arr = [];
+    let dp = [];
     for(let i = 0; i <= n; i++) {
-        arr.push(null);
+        dp.push(null);
     }
-    arr[0] = 0;
-    return addSquares(n, arr);    
+    dp[0] = 0;
+    return addSquares(n, dp);
 };
 
